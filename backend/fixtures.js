@@ -23,7 +23,7 @@ const run = async () => {
     },{
         username: 'user003',
         password: 'user003',
-        token: nanoid
+        token: nanoid()
     });
 
     const [post1, post2, post3] = await Posts.create({
@@ -31,7 +31,7 @@ const run = async () => {
         author: user1,
         datetime: new Date(),
         description: 'Here goes description',
-        image: 'post1.png'
+        image: 'fixtures/post1.png'
     },{
         title:'here goes title',
         author: user2,
@@ -42,7 +42,7 @@ const run = async () => {
         author: user3,
         datetime: new Date(),
         description: 'the description',
-        image: 'post2.png'
+        image: 'fixtures/post2.png'
     });
 
     await Comments.create({
@@ -50,7 +50,7 @@ const run = async () => {
         author: user2,
         text:'some comment text',
         datetime: new Date(),
-        image: 'comment1.png'
+        image: 'fixtures/comment1.png'
     },{
         post: post1,
         author: user3,
@@ -61,12 +61,16 @@ const run = async () => {
         author: user1,
         text: 'here goes comment text',
         datetime: new Date(),
-        image: 'comment1.png'
+        image: 'fixtures/comment1.png'
     },{
         post: post3,
         author: user1,
         text:'some text',
         datetime: new Date(),
-        image: 'comment1.png'
-    })
+        image: 'fixtures/comment1.png'
+    });
+
+    await mongoose.connection.close();
 };
+
+run().catch(console.error);
