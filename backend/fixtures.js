@@ -31,7 +31,7 @@ const run = async () => {
         author: user1,
         datetime: new Date(),
         description: 'Here goes description',
-        image: 'fixtures/post1.png'
+        image: '/fixtures/post1.png'
     },{
         title:'here goes title',
         author: user2,
@@ -42,7 +42,7 @@ const run = async () => {
         author: user3,
         datetime: new Date(),
         description: 'the description',
-        image: 'fixtures/post2.png'
+        image: '/fixtures/post2.png'
     });
 
     await Comments.create({
@@ -50,7 +50,6 @@ const run = async () => {
         author: user2,
         text:'some comment text',
         datetime: new Date(),
-        image: 'fixtures/comment1.png'
     },{
         post: post1,
         author: user3,
@@ -61,13 +60,11 @@ const run = async () => {
         author: user1,
         text: 'here goes comment text',
         datetime: new Date(),
-        image: 'fixtures/comment1.png'
     },{
         post: post3,
         author: user1,
         text:'some text',
         datetime: new Date(),
-        image: 'fixtures/comment1.png'
     });
 
     await mongoose.connection.close();

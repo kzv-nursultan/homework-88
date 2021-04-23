@@ -1,24 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import MainPage from "./containers/MainPage/MainPage";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
+import ButtonAppBar from "./containers/AppBar/AppBar";
+import SignUp from "./containers/SignUp/SignUp";
+import SignIn from "./containers/SignIn/SignIn";
+import NewPost from "./containers/NewPost/NewPost";
+import OnePostPage from "./containers/OnePostPage/OnePostPage";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+        <ButtonAppBar/>
+          <Switch>
+            <Route path='/' exact component={MainPage}/>
+            <Route path='/register' component={SignUp}/>
+            <Route path='/login' component={SignIn}/>
+            <Route path='/addPost' component={NewPost}/>
+            <Route path='/post/:id' component={OnePostPage}/>
+          </Switch>
+    </BrowserRouter>
   );
 }
 

@@ -19,9 +19,6 @@ const CommentSchema = new Schema({
     datetime: {
         type: String,
         required: true,
-    },
-    image: {
-        type: String,
     }
 });
 

@@ -17,11 +17,16 @@ const PostSchema = new Schema({
     },
     description: {
       type: String,
-      required: true,
+      required: function(){
+          return !this.image;
+      },
     },
     image: {
         type: String,
-    }
+        required: function(){
+            return !this.description;
+        },
+    },
 });
 
 PostSchema.methods.createDate = function () {

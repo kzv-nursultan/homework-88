@@ -3,7 +3,6 @@ const Users = require('../models/UserSchema');
 const router = express.Router();
 
 router.post('/', async (req, res)=>{
-    console.log(req.body);
     try {
         const newUser = new Users(req.body);
         await newUser.save();
@@ -24,14 +23,13 @@ router.get('/', async (req, res)=>{
 
 router.post('/session', async (req, res)=>{
     const data = req.body;
-    console.log(data.password);
     const user = await Users.findOne({username: data.username});
     if (!user) {
         return res.status(400).send({error:'User not found'});
     };
     const isMatch = await user.checkPassword(data.password);
     if(!isMatch) {
-        return(res.status(400).send({error:'User not found(pass)'}));
+        return(res.status(400).send({error:'User not found'}));
     };
 
     try {
@@ -41,6 +39,20 @@ router.post('/session', async (req, res)=>{
     } catch (e) {
         res.status(500).send(e);
     };
+});
+
+router.delete('/session', async (req,res)=>{
+    const token = req.get('Authorization');
+    const success = {message: 'success!'};
+
+    if(!token) return res.send(success);
+
+    const user = await Users.findOne({token});
+    if (!user) return res.send(success);
+
+    user.generateToken();
+    await user.save();
+    res.send(success);
 });
 
 router.delete('/:id', async (req,res)=>{

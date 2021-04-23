@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
         cb(null, config.uploadPath);
     },
     filename: (req, file, cb) => {
-        cb(null, nanoid(5) + path.extname(file.original.name));
+        cb(null, nanoid(5) + path.extname(file.originalname));
     }
 });
 
@@ -32,7 +32,7 @@ router.post('/', auth, upload.single('image'), async (req, res)=>{
     if(data.title && data.author) {
         try {
             if (req.file) {
-                data.image = '/uploads' + req.file.filename;
+                data.image = '/uploads/' + req.file.filename;
             };
             const newPost = await new Posts(data);
             newPost.createDate();
@@ -44,6 +44,15 @@ router.post('/', auth, upload.single('image'), async (req, res)=>{
     } else {
         res.status(400).send('Check your inputs');
     }
+});
+
+router.get('/:id', async (req, res)=>{
+    try {
+        const data = await Posts.findById(req.params.id).populate('author');
+        res.send(data);
+    } catch (error) {
+        res.status(500).send('something went wrong');
+    };
 });
 
 module.exports = router;
